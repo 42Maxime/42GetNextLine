@@ -6,7 +6,7 @@
 /*   By: mafouche <mafouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:59:38 by mafouche          #+#    #+#             */
-/*   Updated: 2026/11/12 15:11:49 by mafouche         ###   ########.fr       */
+/*   Updated: 2026/11/12 16:33:11 by mafouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	x = 0;
+	if (!s1)
+		return (NULL);
 	i = ft_strlen(s1);
 	x = ft_strlen(s2);
 	str = malloc(sizeof(char) * (i + x) + 1);

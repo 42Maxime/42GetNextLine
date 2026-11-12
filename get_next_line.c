@@ -6,7 +6,7 @@
 /*   By: mafouche <mafouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:57:49 by mafouche          #+#    #+#             */
-/*   Updated: 2026/11/12 16:29:52 by mafouche         ###   ########.fr       */
+/*   Updated: 2026/11/12 16:34:09 by mafouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strchr(const char *s, int c)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	while (s[i])
 	{
 		if ((unsigned char)s[i] == (unsigned char)c)
@@ -36,7 +38,7 @@ char	*get_line(char **saved, char **buffer, char **line, int *cnt, int fd)
 	while ((!ft_strchr(*saved, '\n')) && *cnt > 0)
 	{
 		*cnt = read(fd, *buffer, BUFFER_SIZE);
-		buffer[*cnt] = '\0';
+		(*buffer)[*cnt] = '\0';
 		*saved = ft_strjoin(*saved, *buffer);
 	}
 	return (*saved);
@@ -68,16 +70,16 @@ int	main(void)
 	fd = open("hello.txt", O_RDONLY);
 
 	get = get_next_line(fd);
-	printf("1er : %s", get);
+	printf("1er : %s\n", get);
 	free(get);
 	get = get_next_line(fd);
-	printf("2eme : %s", get);
+	printf("2eme : %s\n", get);
 	free(get);
 	get = get_next_line(fd);
-	printf("3eme : %s", get);
+	printf("3eme : %s\n", get);
 	free(get);
 	get = get_next_line(fd);
-	printf("4eme : %s", get);
+	printf("4eme : %s\n", get);
 	free(get);
 	return (0);
 }
