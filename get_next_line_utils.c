@@ -6,7 +6,7 @@
 /*   By: mafouche <mafouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:59:38 by mafouche          #+#    #+#             */
-/*   Updated: 2026/11/12 16:33:11 by mafouche         ###   ########.fr       */
+/*   Updated: 2026/11/13 11:59:49 by mafouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_memcpy(str, s1, i);
 	ft_memcpy(&str[i], s2, x);
 	str[i + x] = '\0';
+	free(s1);
 	return (str);
 }
 

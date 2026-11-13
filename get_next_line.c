@@ -6,13 +6,13 @@
 /*   By: mafouche <mafouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:57:49 by mafouche          #+#    #+#             */
-/*   Updated: 2026/11/12 16:34:09 by mafouche         ###   ########.fr       */
+/*   Updated: 2026/11/13 12:01:57 by mafouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c, int x)
 {
 	int	i;
 
@@ -22,12 +22,36 @@ char	*ft_strchr(const char *s, int c)
 	while (s[i])
 	{
 		if ((unsigned char)s[i] == (unsigned char)c)
+		{
+			if (x == 1)
+				return ((char *)&s[i + 1]);
 			return ((char *)&s[i]);
+		}
 		i++;
 	}
 	if ((unsigned char)s[i] == (unsigned char)c)
+	{
+		if (x == 1)
+			return ((char *)&s[i + 1]);
 		return ((char *)&s[i]);
+	}
 	return (NULL);
+}
+
+char	*return_line(char	*saved)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = malloc(sizeof(char) * ft_strlen(saved));
+	while (saved[i] && saved[i] != '\n')
+	{
+		tmp[i] = saved[i];
+		i++;
+	}
+	tmp[i] = '\n';
+	return (tmp);
 }
 
 char	*get_line(char **saved, char **buffer, char **line, int *cnt, int fd)
@@ -35,13 +59,15 @@ char	*get_line(char **saved, char **buffer, char **line, int *cnt, int fd)
 	*buffer = ft_calloc((BUFFER_SIZE + 1), 1);
 	if (!*buffer)
 		return (NULL);
-	while ((!ft_strchr(*saved, '\n')) && *cnt > 0)
+	while ((!ft_strchr(*saved, '\n', 0)) && *cnt > 0)
 	{
 		*cnt = read(fd, *buffer, BUFFER_SIZE);
 		(*buffer)[*cnt] = '\0';
 		*saved = ft_strjoin(*saved, *buffer);
 	}
-	return (*saved);
+	*line = return_line(*saved);
+	*saved = ft_strjoin(ft_strchr(*saved, '\n', 1), "");
+	return (*line);
 }
 
 char	*get_next_line(int fd)
@@ -52,13 +78,15 @@ char	*get_next_line(int fd)
 	int			cnt;
 
 	cnt = 1;
-/*	if (!saved)
+	if (!saved)
 	{
 		saved = ft_calloc(1, BUFFER_SIZE);
 		if (!saved)
 			return (NULL);
-	}*/
+	}
 	line = get_line(&saved, &buffer, &line, &cnt, fd);
+	free(saved);
+	free(buffer);
 	return (line);
 }
 
