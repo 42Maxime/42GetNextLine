@@ -6,7 +6,7 @@
 /*   By: mafouche <mafouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:57:49 by mafouche          #+#    #+#             */
-/*   Updated: 2026/11/13 12:01:57 by mafouche         ###   ########.fr       */
+/*   Updated: 2026/11/13 12:06:22 by mafouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,14 @@ char	*return_line(char	*saved)
 	char	*tmp;
 
 	i = 0;
-	tmp = malloc(sizeof(char) * ft_strlen(saved));
+	tmp = malloc(sizeof(char) * (ft_strlen(saved) + 2));
 	while (saved[i] && saved[i] != '\n')
 	{
 		tmp[i] = saved[i];
 		i++;
 	}
 	tmp[i] = '\n';
+	tmp[i + 1] = '\0';
 	return (tmp);
 }
 
@@ -85,7 +86,6 @@ char	*get_next_line(int fd)
 			return (NULL);
 	}
 	line = get_line(&saved, &buffer, &line, &cnt, fd);
-	free(saved);
 	free(buffer);
 	return (line);
 }
