@@ -6,7 +6,7 @@
 /*   By: mafouche <mafouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:57:49 by mafouche          #+#    #+#             */
-/*   Updated: 2026/11/13 12:06:22 by mafouche         ###   ########.fr       */
+/*   Updated: 2026/11/13 12:16:57 by mafouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,39 @@ char	*ft_strchr(const char *s, int c, int x)
 	return (NULL);
 }
 
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (src[j])
+		j++;
+	if (size == 0)
+		return (j);
+	while (src[i] && i < size - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (j);
+}
+
+char	*ft_strdup(const char *s)
+{
+	size_t	len;
+	char	*new;
+
+	len = ft_strlen(s);
+	new = malloc(sizeof(char) * len + 1);
+	if (!new)
+		return (NULL);
+	ft_strlcpy(new, s, len + 1);
+	return (new);
+}
+
 char	*return_line(char	*saved)
 {
 	int		i;
@@ -57,6 +90,8 @@ char	*return_line(char	*saved)
 
 char	*get_line(char **saved, char **buffer, char **line, int *cnt, int fd)
 {
+	char	*rest;
+	
 	*buffer = ft_calloc((BUFFER_SIZE + 1), 1);
 	if (!*buffer)
 		return (NULL);
@@ -67,7 +102,9 @@ char	*get_line(char **saved, char **buffer, char **line, int *cnt, int fd)
 		*saved = ft_strjoin(*saved, *buffer);
 	}
 	*line = return_line(*saved);
-	*saved = ft_strjoin(ft_strchr(*saved, '\n', 1), "");
+	rest = ft_strdup(ft_strchr(*saved, '\n', 1));
+	free(*saved);
+	*saved = rest;
 	return (*line);
 }
 
