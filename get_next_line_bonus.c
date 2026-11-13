@@ -118,7 +118,7 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	char		*line;
 
-	if (fd < 0)
+	if (fd < 0 || fd >= MAX_FD)
 		return (NULL);
 	if (!saved[fd])
 	{
