@@ -6,7 +6,7 @@
 /*   By: mafouche <mafouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:57:49 by mafouche          #+#    #+#             */
-/*   Updated: 2026/11/13 12:23:12 by mafouche         ###   ########.fr       */
+/*   Updated: 2026/11/13 12:50:51 by mafouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,38 +38,28 @@ char	*ft_strchr(const char *s, int c, int x)
 	return (NULL);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	while (src[j])
-		j++;
-	if (size == 0)
-		return (j);
-	while (src[i] && i < size - 1)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (j);
-}
-
 char	*ft_strdup(const char *s)
 {
 	size_t	len;
 	char	*new;
+	size_t	i;
 
+	i = 0;
 	if (!s)
 		return (NULL);
 	len = ft_strlen(s);
 	new = malloc(sizeof(char) * len + 1);
 	if (!new)
 		return (NULL);
-	ft_strlcpy(new, s, len + 1);
+	len += 1;
+	while (s[len])
+		len++;
+	while (s[i] && i < (len) - 1)
+	{
+		new[i] = s[i];
+		i++;
+	}
+	new[i] = '\0';
 	return (new);
 }
 
@@ -90,17 +80,19 @@ char	*return_line(char	*saved)
 	return (tmp);
 }
 
-char	*get_line(char **saved, char **buffer, char **line, int *cnt, int fd)
+char	*get_line(char **saved, char **buffer, char **line, int fd)
 {
+	int		cnt;
 	char	*rest;
-	
+
+	cnt = 1;
 	*buffer = ft_calloc((BUFFER_SIZE + 1), 1);
 	if (!*buffer)
 		return (NULL);
-	while ((!ft_strchr(*saved, '\n', 0)) && *cnt > 0)
+	while ((!ft_strchr(*saved, '\n', 0)) && cnt > 0)
 	{
-		*cnt = read(fd, *buffer, BUFFER_SIZE);
-		(*buffer)[*cnt] = '\0';
+		cnt = read(fd, *buffer, BUFFER_SIZE);
+		(*buffer)[cnt] = '\0';
 		*saved = ft_strjoin(*saved, *buffer);
 	}
 	*line = return_line(*saved);
@@ -115,21 +107,21 @@ char	*get_next_line(int fd)
 	static char	*saved;
 	char		*buffer;
 	char		*line;
-	int			cnt;
 
-	cnt = 1;
+	if (fd < 0)
+		return (NULL);
 	if (!saved)
 	{
 		saved = ft_calloc(1, BUFFER_SIZE);
 		if (!saved)
 			return (NULL);
 	}
-	line = get_line(&saved, &buffer, &line, &cnt, fd);
+	line = get_line(&saved, &buffer, &line, fd);
 	free(buffer);
 	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int		fd;
 	char	*get;
@@ -148,5 +140,6 @@ int	main(void)
 	get = get_next_line(fd);
 	printf("4eme : %s\n", get);
 	free(get);
+	close(fd);
 	return (0);
-}
+}*/

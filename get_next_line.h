@@ -6,7 +6,7 @@
 /*   By: mafouche <mafouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:57:53 by mafouche          #+#    #+#             */
-/*   Updated: 2026/11/12 15:39:32 by mafouche         ###   ########.fr       */
+/*   Updated: 2026/11/13 12:51:16 by mafouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
-char	*get_line(char **saved, char **buffer, char **line, int *cnt, int fd);
+char	*get_line(char **saved, char **buffer, char **line, int fd);
 size_t	ft_strlen(const char *s);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
