@@ -6,7 +6,7 @@
 /*   By: mafouche <mafouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:57:49 by mafouche          #+#    #+#             */
-/*   Updated: 2026/11/13 12:50:51 by mafouche         ###   ########.fr       */
+/*   Updated: 2026/11/13 15:26:33 by mafouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@ char	*ft_strdup(const char *s)
 	new = malloc(sizeof(char) * len + 1);
 	if (!new)
 		return (NULL);
-	len += 1;
-	while (s[len])
-		len++;
 	while (s[i] && i < (len) - 1)
 	{
 		new[i] = s[i];
@@ -75,8 +72,9 @@ char	*return_line(char	*saved)
 		tmp[i] = saved[i];
 		i++;
 	}
-	tmp[i] = '\n';
-	tmp[i + 1] = '\0';
+	if (saved[i] == '\n')
+		tmp[i++] = '\n';
+	tmp[i] = '\0';
 	return (tmp);
 }
 
@@ -86,14 +84,26 @@ char	*get_line(char **saved, char **buffer, char **line, int fd)
 	char	*rest;
 
 	cnt = 1;
-	*buffer = ft_calloc((BUFFER_SIZE + 1), 1);
+	*buffer = malloc(BUFFER_SIZE + 1);
 	if (!*buffer)
 		return (NULL);
 	while ((!ft_strchr(*saved, '\n', 0)) && cnt > 0)
 	{
 		cnt = read(fd, *buffer, BUFFER_SIZE);
+		if (cnt < 0)
+		{
+			free(*saved);
+			*saved = NULL;
+			return (NULL);
+		}
 		(*buffer)[cnt] = '\0';
 		*saved = ft_strjoin(*saved, *buffer);
+	}
+	if (!*saved || !(*saved)[0])
+	{
+		free(*saved);
+		*saved = NULL;
+		return (NULL);
 	}
 	*line = return_line(*saved);
 	rest = ft_strdup(ft_strchr(*saved, '\n', 1));
@@ -112,7 +122,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!saved)
 	{
-		saved = ft_calloc(1, BUFFER_SIZE);
+		saved = ft_calloc(1, 1);
 		if (!saved)
 			return (NULL);
 	}
@@ -121,7 +131,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/*int	main(void)
+int	main(void)
 {
 	int		fd;
 	char	*get;
@@ -142,4 +152,4 @@ char	*get_next_line(int fd)
 	free(get);
 	close(fd);
 	return (0);
-}*/
+}
