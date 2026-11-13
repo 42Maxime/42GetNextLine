@@ -6,7 +6,7 @@
 /*   By: mafouche <mafouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:57:49 by mafouche          #+#    #+#             */
-/*   Updated: 2026/11/13 12:16:57 by mafouche         ###   ########.fr       */
+/*   Updated: 2026/11/13 12:23:12 by mafouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ char	*ft_strdup(const char *s)
 	size_t	len;
 	char	*new;
 
+	if (!s)
+		return (NULL);
 	len = ft_strlen(s);
 	new = malloc(sizeof(char) * len + 1);
 	if (!new)
