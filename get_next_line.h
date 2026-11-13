@@ -6,7 +6,7 @@
 /*   By: mafouche <mafouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:57:53 by mafouche          #+#    #+#             */
-/*   Updated: 2026/11/13 15:26:08 by mafouche         ###   ########.fr       */
+/*   Updated: 2026/11/13 16:05:27 by mafouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10000
+#  define BUFFER_SIZE 10000000
 # endif
 
 # include <unistd.h>
@@ -29,5 +29,8 @@ void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strjoin(char *s1, char *s2);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
+char	*ft_strchr(const char *s, int c, int x);
+char	*ft_strdup(const char *s);
+char	*return_line(char *saved);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mafouche <mafouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:57:49 by mafouche          #+#    #+#             */
-/*   Updated: 2026/11/13 15:26:33 by mafouche         ###   ########.fr       */
+/*   Updated: 2026/11/13 16:19:45 by mafouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_strdup(const char *s)
 	new = malloc(sizeof(char) * len + 1);
 	if (!new)
 		return (NULL);
-	while (s[i] && i < (len) - 1)
+	while (s[i] && i < len)
 	{
 		new[i] = s[i];
 		i++;
@@ -60,7 +60,7 @@ char	*ft_strdup(const char *s)
 	return (new);
 }
 
-char	*return_line(char	*saved)
+char	*return_line(char *saved)
 {
 	int		i;
 	char	*tmp;
@@ -131,7 +131,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int		fd;
 	char	*get;
@@ -139,17 +139,32 @@ int	main(void)
 	fd = open("hello.txt", O_RDONLY);
 
 	get = get_next_line(fd);
-	printf("1er : %s\n", get);
+	printf("1er : %s", get);
 	free(get);
 	get = get_next_line(fd);
-	printf("2eme : %s\n", get);
+	printf("2eme : %s", get);
 	free(get);
 	get = get_next_line(fd);
-	printf("3eme : %s\n", get);
+	printf("3eme : %s", get);
 	free(get);
 	get = get_next_line(fd);
-	printf("4eme : %s\n", get);
+	printf("4eme : %s", get);
+	free(get);
+	get = get_next_line(fd);
+	printf("5eme : %s", get);
+	free(get);
+	get = get_next_line(fd);
+	printf("6eme : %s", get);
+	free(get);
+	get = get_next_line(fd);
+	printf("7eme : %s", get);
+	free(get);
+	get = get_next_line(fd);
+	printf("8eme : %s", get);
+	free(get);
+	get = get_next_line(fd);
+	printf("9eme : %s", get);
 	free(get);
 	close(fd);
 	return (0);
-}
+}*/
